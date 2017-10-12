@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Wix xmlns="http://schemas.microsoft.com/wix/2006/wi"
+     xmlns:iis="http://schemas.microsoft.com/wix/IIsExtension"
+     xmlns:util="http://schemas.microsoft.com/wix/UtilExtension">
+  <Fragment>
+    <ComponentGroup Id="WebsiteIISConfiguration" Directory="EMiniGigFolder">
+      <!--<util:User Id="MyWebSite_AppPoolUser" Name="domain\username" Password="pwd"/>-->
+      
+      <Component Id="AppPoolComponent" Guid="{9B1E6B80-2D28-45ED-9F36-624B7B0DA278}" KeyPath="yes">
+                
+        <!-- Creates the App Pool -->
+        <iis:WebAppPool Id="EMiniGigAppPool"
+                        Name="EMiniGig"
+                        Identity="networkService"
+                        ManagedPipelineMode="Classic"
+                        ManagedRuntimeVersion="v4.0" />
+      </Component>
+
+      <Component Id="WebsiteComponent" Guid="{7F9D9113-D0D7-42F7-9F84-BC0133A93446}" KeyPath="yes">
+        <!-- Install to default web site -->
+        <iis:WebSite Id="DefaultWebsite" Description="[WEB.SITENAME]" Directory="EMiniGigFolder" AutoStart="yes" 
+                     StartOnInstall="yes" ConfigureIfExists="yes">
+          <iis:WebAddress Id="AllUnassigned" Port="[WEB.PORT]" />
+          <iis:WebApplication Id="WebApplication" Name="EMiniGig" WebAppPool="EMiniGigAppPool"/>
+          <iis:WebDirProperties Id="WebProperties" WindowsAuthentication="no" AnonymousAccess="yes" DefaultDocuments="Pages/MainPage.aspx"/>
+        </iis:WebSite>
+      </Component>
+   
+      </ComponentGroup>
+   
+  </Fragment>
+</Wix>

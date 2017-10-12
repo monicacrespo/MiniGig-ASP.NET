@@ -1,0 +1,30 @@
+﻿<?xml version='1.0' encoding='utf-8'?>
+<SettingsFile xmlns="http://schemas.microsoft.com/VisualStudio/2004/01/settings" CurrentProfile="(Default)" GeneratedClassNamespace="Model.Properties" GeneratedClassName="Settings">
+  <Profiles />
+  <Settings>
+    <Setting Name="GigDAOFactory_daoClassName" Type="System.String" Scope="Application">
+      <Value Profile="(Default)">Model.Gig.DAO.GigDAO</Value>
+    </Setting>
+    <Setting Name="GigServiceFactory_daoClassName" Type="System.String" Scope="Application">
+      <Value Profile="(Default)">Model.GigFacade.GigService</Value>
+    </Setting>
+    <Setting Name="DAOFactory_connectionString" Type="System.String" Scope="Application">
+      <Value Profile="(Default)">Data Source=.\SQLExpress; Initial Catalog=MiniGig; User ID=user2; Password=user2</Value>
+    </Setting>
+    <Setting Name="LogManager_FileLocation" Type="System.String" Scope="Application">
+      <Value Profile="(Default)">S:\\Log</Value>
+    </Setting>
+    <Setting Name="LogManager_FilePartialName" Type="System.String" Scope="Application">
+      <Value Profile="(Default)">log</Value>
+    </Setting>
+    <Setting Name="LogManager_FileExtension" Type="System.String" Scope="Application">
+      <Value Profile="(Default)">txt</Value>
+    </Setting>
+    <Setting Name="LogManager_SecurityLevel" Type="System.String" Scope="Application">
+      <Value Profile="(Default)">3</Value>
+    </Setting>
+    <Setting Name="LogManager_LogDestination" Type="System.String" Scope="Application">
+      <Value Profile="(Default)">ALL</Value>
+    </Setting>
+  </Settings>
+</SettingsFile>

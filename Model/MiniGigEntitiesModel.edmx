@@ -1,0 +1,135 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="2.0" xmlns:edmx="http://schemas.microsoft.com/ado/2008/10/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="Model.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2008" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/02/edm/ssdl">
+        <EntityType Name="Gig">
+          <Key>
+            <PropertyRef Name="gigId" />
+          </Key>
+          <Property Name="gigId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="name" Type="varchar" MaxLength="255" Nullable="false" />
+          <Property Name="date" Type="datetime2" Precision="7" Nullable="false" />
+          <Property Name="typeId" Type="tinyint" Nullable="false" />
+        </EntityType>
+        <EntityType Name="MusicType">
+          <Key>
+            <PropertyRef Name="typeId" />
+          </Key>
+          <Property Name="typeId" Type="tinyint" Nullable="false" />
+          <Property Name="description" Type="varchar" MaxLength="255" Nullable="false" />
+        </EntityType>
+        <Association Name="FK_GigTypeId">
+          <End Role="MusicType" Type="Self.MusicType" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Gig" Type="Self.Gig" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="MusicType">
+              <PropertyRef Name="typeId" />
+            </Principal>
+            <Dependent Role="Gig">
+              <PropertyRef Name="typeId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="ModelStoreContainer">
+          <EntitySet Name="Gig" EntityType="Self.Gig" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="MusicType" EntityType="Self.MusicType" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_GigTypeId" Association="Self.FK_GigTypeId">
+            <End Role="MusicType" EntitySet="MusicType" />
+            <End Role="Gig" EntitySet="Gig" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="Model" Alias="Self" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns="http://schemas.microsoft.com/ado/2008/09/edm">
+        <EntityContainer Name="MiniGigEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Gigs" EntityType="Model.Gig" />
+          <EntitySet Name="MusicTypes" EntityType="Model.MusicType" />
+          <AssociationSet Name="FK_Gig_TypeMusic" Association="Model.FK_Gig_TypeMusic">
+            <End Role="MusicType" EntitySet="MusicTypes" />
+            <End Role="Gig" EntitySet="Gigs" />
+          </AssociationSet>
+        </EntityContainer>
+        <EntityType Name="Gig">
+          <Key>
+            <PropertyRef Name="gigId" />
+          </Key>
+          <Property Name="gigId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="name" Type="String" Nullable="false" MaxLength="255" Unicode="false" FixedLength="false" />
+          <Property Name="date" Type="DateTime" Nullable="false" Precision="7" />
+          <Property Name="typeId" Type="Byte" Nullable="false" />
+          <NavigationProperty Name="MusicType" Relationship="Model.FK_Gig_TypeMusic" FromRole="Gig" ToRole="MusicType" />
+        </EntityType>
+        <EntityType Name="MusicType">
+          <Key>
+            <PropertyRef Name="typeId" />
+          </Key>
+          <Property Name="typeId" Type="Byte" Nullable="false" />
+          <Property Name="description" Type="String" Nullable="false" MaxLength="255" Unicode="false" FixedLength="false" />
+          <NavigationProperty Name="Gigs" Relationship="Model.FK_Gig_TypeMusic" FromRole="MusicType" ToRole="Gig" />
+        </EntityType>
+        <Association Name="FK_Gig_TypeMusic">
+          <End Role="MusicType" Type="Model.MusicType" Multiplicity="1" />
+          <End Role="Gig" Type="Model.Gig" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="MusicType">
+              <PropertyRef Name="typeId" />
+            </Principal>
+            <Dependent Role="Gig">
+              <PropertyRef Name="typeId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2008/09/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="ModelStoreContainer" CdmEntityContainer="MiniGigEntities">
+          <EntitySetMapping Name="Gigs"><EntityTypeMapping TypeName="Model.Gig"><MappingFragment StoreEntitySet="Gig">
+            <ScalarProperty Name="gigId" ColumnName="gigId" />
+            <ScalarProperty Name="name" ColumnName="name" />
+            <ScalarProperty Name="date" ColumnName="date" />
+            <ScalarProperty Name="typeId" ColumnName="typeId" />
+          </MappingFragment></EntityTypeMapping></EntitySetMapping>
+          <EntitySetMapping Name="MusicTypes"><EntityTypeMapping TypeName="Model.MusicType"><MappingFragment StoreEntitySet="MusicType">
+            <ScalarProperty Name="typeId" ColumnName="typeId" />
+            <ScalarProperty Name="description" ColumnName="description" />
+          </MappingFragment></EntityTypeMapping></EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2008/10/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="True" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="True" />
+        <DesignerProperty Name="UseLegacyProvider" Value="True" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams>
+      <Diagram Name="MiniGigEntitiesModel">
+        <EntityTypeShape EntityType="Model.Gig" Width="1.5" PointX="3.25" PointY="0.875" Height="1.9802864583333335" IsExpanded="true" />
+        <EntityTypeShape EntityType="Model.MusicType" Width="1.5" PointX="5.375" PointY="1.25" Height="1.5956835937499996" IsExpanded="true" />
+        <AssociationConnector Association="Model.FK_Gig_TypeMusic" ManuallyRouted="false">
+          <ConnectorPoint PointX="5.375" PointY="2.047841796875" />
+          <ConnectorPoint PointX="4.75" PointY="2.047841796875" />
+        </AssociationConnector>
+      </Diagram>
+    </Diagrams>
+  </Designer>
+</edmx:Edmx>

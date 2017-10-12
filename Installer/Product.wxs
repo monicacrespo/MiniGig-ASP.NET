@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Wix xmlns="http://schemas.microsoft.com/wix/2006/wi"
+     xmlns:iis="http://schemas.microsoft.com/wix/IIsExtension"
+     xmlns:util="http://schemas.microsoft.com/wix/UtilExtension">
+  <?include Includes\Dependencies.wxi?>
+  <Product Id="*" Name="EMiniGig $(var.ProductVersion)" Language="1033" Version="$(var.ProductVersion)"
+           Manufacturer="Monica Crespo" UpgradeCode="a61cbb71-5ee4-45f3-9f19-32591ba672fa">
+    <Package InstallerVersion="200" Compressed="yes" InstallScope="perMachine"
+              Description="Mini Gig"
+              Manufacturer="Monica Crespo"/>
+    <MajorUpgrade DowngradeErrorMessage="A newer version of [ProductName] is already installed." />
+    <MediaTemplate EmbedCab="yes"/>
+
+    <!-- Set the default values, can be set to included parameters-->     
+    <Property Id="WEB.SITENAME" Value="EMiniGig" />
+    <Property Id="WEB.PORT" Value="85" />
+
+    <Property Id="MINIGIG.DB.USER" Value="MiniGig" />
+    <Property Id="MINIGIG.DB.SERVER" Value="LENOVITO-PC\SQLEXPRESS" />  
+      
+    <!-- Install Feature which is made up of only one Component WebsiteFeature which lives in the file WebsiteFeature.wxs file -->
+    <Feature Id="ProductFeature" Title="MiniGig" Display="expand" Level="1" >
+      <Feature Id="WebsiteFeature" Title="Mini Gig Web Site" Level="1">
+        <ComponentGroupRef Id="MyWebWebComponents" />
+        <ComponentGroupRef Id="WebsiteIISConfiguration" />
+      </Feature>
+    </Feature>
+
+  </Product>
+
+  <Fragment>
+    <!--wix installer will install to D:\ if available, and it not, then revert to the C:\ drive-->
+    <Property Id="ROOTDRIVE" Value="C:\">
+      <DirectorySearch Id="Root_search" Path="D:\" Depth="1"/>
+    </Property>
+
+    <!-- Will default to C:\ if that is the main disk-->
+    <Directory Id="TARGETDIR" Name="SourceDir">
+      <!-- Will reference to C:\Websites-->
+      <Directory Id="WebsiteFolder" Name="Websites">
+        <Directory Id="EMiniGigFolder" Name="EMiniGig">
+        </Directory>
+      </Directory>
+      </Directory>
+  </Fragment>
+
+    
+</Wix>

@@ -1,0 +1,167 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Wix xmlns="http://schemas.microsoft.com/wix/2006/wi"  xmlns:iis="http://schemas.microsoft.com/wix/IIsExtension"   xmlns:util="http://schemas.microsoft.com/wix/UtilExtension">
+  <?include $(sys.CURRENTDIR)\Includes\Dependencies.wxi?>
+  <Fragment>
+    
+    <!-- Refers back to the folder installed in the Program Files-->
+    <DirectoryRef Id="EMiniGigFolder">    
+      <Directory Id="WebUIAppGlobalResourcesFolder" Name="App_GlobalResources"/>
+      <Directory Id="WebUIAppLocalResourcesFolder" Name="App_LocalResources">
+        <Directory Id="WebUIAppLocalResourcesEnFolder" Name="en-default"/>
+        <Directory Id="WebUIAppLocalResourcesEsFolder" Name="es"/>
+      </Directory>
+      <Directory Id="WebUIAppThemesFolder" Name="App_Themes">
+        <Directory Id="WebUIThemeDefaultFolder" Name="Default">
+          <Directory Id="WebUIAppThemeFolder" Name="redmond">
+            <Directory Id="WebUIAppImagesFolder" Name="images"/>
+          </Directory>
+        </Directory>
+      </Directory>
+      <Directory Id="WebUIBinFolder" Name="Bin" />
+      <Directory Id="WebUIPagesFolder" Name="Pages">
+        <Directory Id="WebUIPagesResourcesFolder" Name="App_LocalResources">
+          <Directory Id="WebUIPagesAppLocalResourcesEnFolder" Name="en-default"/>
+          <Directory Id="WebUIPagesAppLocalResourcesEsFolder" Name="es"/>
+        </Directory>
+      </Directory>
+      <Directory Id="WebUIScriptFolder" Name="Scripts">
+        <Directory Id="WebUIJqueryFolder" Name="jquery_default"/>
+      </Directory>
+    </DirectoryRef>
+  </Fragment>
+  
+  <Fragment>
+    <ComponentGroup Id="MyWebWebComponents">
+      <Component Id="WebSiteEMiniGigComponent" Guid="{B9224E19-A01C-4F2C-8E73-0A465CCF89D0}"
+                 Directory="EMiniGigFolder">
+
+        <!-- This util allows for editing of .xml files. The file we are editting is defined in the attribute File="[#WebUIConfig]" which points to the web.config file.
+            We use the ElementPath attribute and xsl to navigate to the path of the item we want to edit and then set the value based on the Value attribute.
+            In the case below this uses a parameter we are passing in from the bat file with the name [MINIGIG.DB.SERVER] -->
+
+        <util:XmlFile Id="WebUISetKeyEntities"
+                      Action="setValue" 
+                      ElementPath="/configuration/connectionStrings/add[\[]@name='Entities'[\]]/@connectionString"
+                      File="[#WebUIConfig]"                   
+                      Value="Data Source=[MINIGIG.DB.SERVER];Initial Catalog=minigig;User ID=userminigig;Password=password;Network Library=dbmssocn"
+          />               
+        <!-- File allows us to install files, we are using a variable "$(var.binDir) which is set in the Includes\Dependencies.wxs folder.
+            This is just a relative path. To access output from Projects, include the project as a reference to the wix projext and then  use $(var.ProjectName) which will point to the bin folder -->
+        <File Id="WebUIGlobalAsax" Source="$(var.binDir)\Global.asax" />
+        <File Id="WebUIConfig" Source="$(var.binDir)\Web.config" />
+        <File Id="WebUIMiniVenueSite.Master" Source="$(var.binDir)\MiniVenueSite.Master" />
+      </Component>
+   
+      <Component Id="WebUIAppGlobalResourcesComponent" Directory="WebUIAppGlobalResourcesFolder" Guid="{E8124ED4-5CE4-4E58-A0D7-660A09DD0A76}" KeyPath="yes" >
+        <File Id="GBREs" Source="$(var.binDir)\App_GlobalResources\Common.es.resx"  />
+        <File Id="GBR1" Source="$(var.binDir)\App_GlobalResources\Common.resx"  />
+      </Component>
+   
+      <Component Id="WebUIAppLocalResourcesEnComponent" Guid="{0DD7099C-8B32-4001-AECF-0E13CFB685EE}"
+                KeyPath="yes" Directory="WebUIAppLocalResourcesEnFolder">
+        <File Id="GLREN" Source="$(var.binDir)\App_LocalResources\en-default\MiniVenueSite.Master.resx"  />
+      </Component>
+   
+      <Component Id="WebUIAppLocalResourcesComponent"  Directory="WebUIAppLocalResourcesEsFolder" Guid="{331D2EBF-6B63-42A8-A497-5B9F0022B8B5}" >
+        <File Id="GLRES" Source="$(var.binDir)\App_LocalResources\es\MiniVenueSite.Master.es.resx"  KeyPath="yes"/>
+      </Component>
+   
+      <Component Id="WebUIAppThemesComponent" Directory="WebUIThemeDefaultFolder" Guid="{D1360181-56F1-451C-80C6-B620EA648580}">
+          <File Id="THEMECSS" Source="$(var.binDir)\App_Themes\Default\MiniGig.Styles.css"  KeyPath="yes" />
+        </Component>
+  
+      <Component Id="WebUIAppThemeComponent" Directory="WebUIAppThemeFolder" Guid="{2357BF8A-4A7F-497D-AB9E-3F27389CE2E2}" KeyPath="yes" >
+            <File Id="UICSSCustom" Source="$(var.binDir)\App_Themes\Default\redmond\jquery-ui-1.9.2.custom.css"  />
+            <File Id="UICSSCustom.min" Source="$(var.binDir)\App_Themes\Default\redmond\jquery-ui-1.9.2.custom.min.css"  />
+          </Component>
+    
+      <Component Id="WebUIAppImagesComponent" Directory ="WebUIAppImagesFolder" Guid="{2E24583B-8DDD-47F0-890B-E2176A64B308}" KeyPath="yes" >
+        <File Id="IMGUBF0" Source="$(var.binDir)\App_Themes\Default\redmond\images\ui-bg_flat_0_aaaaaa_40x100.png" />
+        <File Id="IMGUBF5" Source="$(var.binDir)\App_Themes\Default\redmond\images\ui-bg_flat_55_fbec88_40x100.png" />
+        <File Id="IMGUBG7" Source="$(var.binDir)\App_Themes\Default\redmond\images\ui-bg_glass_75_d0e5f5_1x400.png" />
+        <File Id="IMGUBG8" Source="$(var.binDir)\App_Themes\Default\redmond\images\ui-bg_glass_85_dfeffc_1x400.png" />
+        <File Id="IMGUBG9" Source="$(var.binDir)\App_Themes\Default\redmond\images\ui-bg_glass_95_fef1ec_1x400.png" />
+        <File Id="IMGUBGW5" Source="$(var.binDir)\App_Themes\Default\redmond\images\ui-bg_gloss-wave_55_5c9ccc_500x100.png" />
+        <File Id="IMGUBIH1" Source="$(var.binDir)\App_Themes\Default\redmond\images\ui-bg_inset-hard_100_f5f8f9_1x100.png" />
+        <File Id="IMGUBIH100" Source="$(var.binDir)\App_Themes\Default\redmond\images\ui-bg_inset-hard_100_fcfdfd_1x100.png" />
+        <File Id="IMGUI2" Source="$(var.binDir)\App_Themes\Default\redmond\images\ui-icons_217bc0_256x240.png" />
+        <File Id="IMGUI2E" Source="$(var.binDir)\App_Themes\Default\redmond\images\ui-icons_2e83ff_256x240.png" />
+        <File Id="IMGUI4" Source="$(var.binDir)\App_Themes\Default\redmond\images\ui-icons_469bdd_256x240.png" />
+        <File Id="IMGUI6" Source="$(var.binDir)\App_Themes\Default\redmond\images\ui-icons_6da8d5_256x240.png" />
+        <File Id="IMGUICD" Source="$(var.binDir)\App_Themes\Default\redmond\images\ui-icons_cd0a0a_256x240.png" />
+        <File Id="IMGUID" Source="$(var.binDir)\App_Themes\Default\redmond\images\ui-icons_d8e7f3_256x240.png" />
+        <File Id="IMGUIF" Source="$(var.binDir)\App_Themes\Default\redmond\images\ui-icons_f9bd01_256x240.png" />
+      </Component>
+    
+      <Component Id="WebUIBinComponent"  Directory="WebUIBinFolder" Guid="{598C9D53-4A07-498F-A706-DCD6F310221F}" KeyPath="yes">
+        <File Id="BinWeb.dll" Source="$(var.Web.TargetDir)\Web.dll" />
+        <File Id="BinUtil.dll" Source="$(var.binDir)\Bin\Util.dll"  />
+        <File Id="BinModel.dll" Source="$(var.binDir)\Bin\Model.dll" />
+        <File Id="BinMPEC" Source="$(var.binDir)\Bin\Microsoft.Practices.EnterpriseLibrary.Common.dll"  />
+        <File Id="BinMPEL" Source="$(var.binDir)\Bin\Microsoft.Practices.EnterpriseLibrary.Logging.dll" />
+        <File Id="BinMPO" Source="$(var.binDir)\Bin\Microsoft.Practices.ObjectBuilder2.dll"  />
+        <File Id="BinMPU" Source="$(var.binDir)\Bin\Microsoft.Practices.Unity.dll" />
+        <File Id="BinMPUC" Source="$(var.binDir)\Bin\Microsoft.Practices.Unity.Configuration.dll" />
+        <File Id="BinMPUI" Source="$(var.binDir)\Bin\Microsoft.Practices.Unity.Interception.dll" />
+        <File Id="BinMPUIC" Source="$(var.binDir)\Bin\Microsoft.Practices.Unity.Interception.Configuration.dll" />
+        <File Id="BinSDD" Source="$(var.binDir)\Bin\System.Data.DataSetExtensions.dll" />
+        <File Id="BinSD"  Source="$(var.binDir)\Bin\System.Data.dll" />
+        <File Id="BinSDE" Source="$(var.binDir)\Bin\System.Data.Entity.dll"/>
+        <File Id="BinSWE" Source="$(var.binDir)\Bin\System.Web.Entity.dll" />
+      </Component>
+ 
+    <!--Creating additional folders and the relevant files in this folder-->       
+        <Component Id="WebUIPagesAppLocalResourcesEnComponent" Directory="WebUIPagesAppLocalResourcesEnFolder" Guid="{CF24FDF0-F1CE-4C4D-B283-29856B85E675}"
+                    KeyPath="yes"  >
+          <File Id="PGLREN1" Source="$(var.binDir)\Pages\App_LocalResources\en-default\CreateGig.aspx.resx" />
+          <File Id="PGLREN2" Source="$(var.binDir)\Pages\App_LocalResources\en-default\FindGig.aspx.resx" />
+          <File Id="PGLREN3" Source="$(var.binDir)\Pages\App_LocalResources\en-default\FindGigsByDate.aspx.resx" />
+          <File Id="PGLREN4" Source="$(var.binDir)\Pages\App_LocalResources\en-default\GigCreated.aspx.resx" />
+          <File Id="PGLREN5" Source="$(var.binDir)\Pages\App_LocalResources\en-default\MainPage.aspx.resx" />
+          <File Id="PGLREN6" Source="$(var.binDir)\Pages\App_LocalResources\en-default\RemoveGig.aspx.resx" />
+          <File Id="PGLREN7" Source="$(var.binDir)\Pages\App_LocalResources\en-default\SetLocale.aspx.resx" />
+          <File Id="PGLREN8" Source="$(var.binDir)\Pages\App_LocalResources\en-default\ShowGigByGigID.aspx.resx" />
+          <File Id="PGLREN9" Source="$(var.binDir)\Pages\App_LocalResources\en-default\ShowGigsByDate.aspx.resx" />
+          <File Id="PGLREN10" Source="$(var.binDir)\Pages\App_LocalResources\en-default\SuccessfulOperation.aspx.resx" />
+        </Component>
+     
+        <Component Id="WebUIPagesAppLocalResourcesComponent"  Directory ="WebUIPagesAppLocalResourcesEsFolder" Guid="{6385390F-7F73-4C13-BC92-9FDF4641F593}"
+                    KeyPath="yes"  >
+          <File Id="PGLRES1" Source="$(var.binDir)\Pages\App_LocalResources\es\CreateGig.aspx.es.resx" />
+          <File Id="PGLRES2" Source="$(var.binDir)\Pages\App_LocalResources\es\FindGig.aspx.es.resx" />
+          <File Id="PGLRES3" Source="$(var.binDir)\Pages\App_LocalResources\es\FindGigsByDate.aspx.es.resx" />
+          <File Id="PGLRES4" Source="$(var.binDir)\Pages\App_LocalResources\es\GigCreated.aspx.es.resx" />
+          <File Id="PGLRES5" Source="$(var.binDir)\Pages\App_LocalResources\es\MainPage.aspx.es.resx" />
+          <File Id="PGLRES6" Source="$(var.binDir)\Pages\App_LocalResources\es\RemoveGig.aspx.es.resx" />
+          <File Id="PGLRES7" Source="$(var.binDir)\Pages\App_LocalResources\es\SetLocale.aspx.es.resx" />
+          <File Id="PGLRES8" Source="$(var.binDir)\Pages\App_LocalResources\es\ShowGigByGigID.aspx.es.resx" />
+          <File Id="PGLRES9" Source="$(var.binDir)\Pages\App_LocalResources\es\ShowGigsByDate.aspx.es.resx" />
+          <File Id="PGLRES10" Source="$(var.binDir)\Pages\App_LocalResources\es\SuccessfulOperation.aspx.es.resx" />
+        </Component>
+                 
+    <Component Id="WebUIPagesComponent" Directory ="WebUIPagesFolder" Guid="{4B125943-EFFD-4DAD-A5A1-3A6B35B52F72}" KeyPath="yes" >
+      <File Id="WebUIPagesCG" Source="$(var.binDir)\Pages\CreateGig.aspx" />
+      <File Id="WebUIPagesFG" Source="$(var.binDir)\Pages\FindGig.aspx" />
+      <File Id="WebUIPagesFGBD" Source="$(var.binDir)\Pages\FindGigsByDate.aspx" />
+      <File Id="WebUIPagesGC" Source="$(var.binDir)\Pages\GigCreated.aspx" />
+      <File Id="WebUIPagesMP" Source="$(var.binDir)\Pages\MainPage.aspx" />
+      <File Id="WebUIPagesRG" Source="$(var.binDir)\Pages\RemoveGig.aspx" />
+      <File Id="WebUIPagesSL" Source="$(var.binDir)\Pages\SetLocale.aspx" />
+      <File Id="WebUIPagesSGBG" Source="$(var.binDir)\Pages\ShowGigByGigID.aspx" />
+      <File Id="WebUIPagesSGBD" Source="$(var.binDir)\Pages\ShowGigsByDate.aspx" />
+      <File Id="WebUIPagesSO" Source="$(var.binDir)\Pages\SuccessfulOperation.aspx" />
+      <File Id="WebUIPagesUG" Source="$(var.binDir)\Pages\UpdateGig.aspx" />
+    </Component>
+      
+      <Component Id="WebUIScriptComponent" Directory ="WebUIJqueryFolder" Guid="{5E60B1C5-939D-4ABF-B6E6-C26FCF246D69}" KeyPath="yes">
+        <File Id="SCPTc" Source="$(var.binDir)\Scripts\jquery_default\jquery-1.8.3.js" />
+        <File Id="SCPTd" Source="$(var.binDir)\Scripts\jquery_default\jquery-ui-1.9.2.custom.js" />
+        <File Id="SCPTe" Source="$(var.binDir)\Scripts\jquery_default\jquery-ui-1.9.2.custom.min.js" />
+        <File Id="SCPTf" Source="$(var.binDir)\Scripts\jquery_default\modernizr-2.6.2.js" />
+      </Component>
+    </ComponentGroup>
+
+  </Fragment>
+ 
+
+</Wix>

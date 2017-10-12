@@ -1,0 +1,121 @@
+<%@ Master Language="C#" AutoEventWireup="true"
+    CodeBehind="MiniVenueSite.Master.cs"
+    Inherits="Web.MiniVenueSite" %>
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
+<head runat="server">
+    <title>Mini Gig</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+    <link href="~/App_Themes/Default/MiniGig.Styles.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+
+    <div id="window">
+
+        <!-- Body Header. -->
+
+        <div id="header">
+            <asp:Localize ID="lclHeader" meta:resourcekey="lclHeader" runat="server"></asp:Localize>
+        </div>
+
+        <!-- Main Content. -->
+        <div id="pageBody">
+            <div id="sidebar">
+                <ul>
+                    <li>
+                        <asp:HyperLink ID="lnkHome" runat="server"
+                            NavigateUrl="~/Pages/MainPage.aspx" meta:resourcekey="lnkHome">[lnkHome]</asp:HyperLink></li>
+                    <li>
+                        <asp:HyperLink ID="lnkCreateGig" runat="server"
+                            NavigateUrl="~/Pages/CreateGig.aspx"
+                            meta:resourcekey="lnkCreateGig">[lnkCreateGig]</asp:HyperLink></li>
+                    <li>
+                        <asp:HyperLink ID="lnkFindGig" runat="server"
+                            meta:resourcekey="lnkFindGig" NavigateUrl="~/Pages/FindGig.aspx" /></li>
+                    <li>
+                        <asp:HyperLink ID="lnkFindGigsByDate" runat="server"
+                            NavigateUrl="~/Pages/FindGigsByDate.aspx" meta:resourcekey="lnkFindGigsByDate">
+               [lnkFindGigsByDate]</asp:HyperLink></li>
+                    <li>
+                        <asp:HyperLink ID="lnkLocale" runat="server"
+                            meta:resourcekey="lnkLocale"
+                            NavigateUrl="~/Pages/SetLocale.aspx">[lnkLocale]</asp:HyperLink>
+                    </li>
+                    <li>
+                        <asp:HyperLink ID="lnkRemove" runat="server"
+                            meta:resourcekey="lnkRemove" NavigateUrl="~/Pages/RemoveGig.aspx" />
+                    </li>
+                </ul>
+            </div>
+
+            <div id="content">
+                <asp:ContentPlaceHolder ID="ContentPlaceHolderMain" runat="server">
+                </asp:ContentPlaceHolder>
+            </div>
+        </div>
+
+        <!-- Footer. -->
+        <div id="footer">
+            <asp:Localize ID="lclFooter" runat="server" meta:resourcekey="lclFooter" />
+        </div>
+
+    </div>
+
+    <script src="<%= ResolveUrl("~/Scripts/jquery_default/jquery-1.8.3.js")%>" type="text/javascript"></script>
+    <script src="<%= ResolveUrl("~/Scripts/jquery_default/modernizr-2.6.2.js")%>" type="text/javascript"></script>
+
+    <script type="text/javascript">
+
+        $(document).ready(function () {
+            if (!Modernizr.inputtypes.date) {
+                $.getScript("../Scripts/jquery_default/jquery-ui-1.9.2.custom.js", function () {
+                    var css = jQuery("<link>");
+                    css.attr({
+                        rel: "stylesheet",
+                        type: "text/css",
+                        href: "../App_Themes/Default/redmond/jquery-ui-1.9.2.custom.css"
+                    });
+                    $("head").append(css);
+
+                    var $datepickerNew = $('[id$=txtCal]');
+                    var $datepickerFrom = $('[id$=txtCalStartDate]');
+                    var $datepickerTo = $('[id$=txtCalEndDate]');
+                    var $today = new Date();
+
+                    $.datepicker.setDefaults({
+                        dateFormat: 'dd/mm/yy',
+                        changeMonth: true,
+                        changeYear: true,
+                        yearRange: "1925:2030"
+                    });
+
+                    $datepickerNew.datepicker({
+                        onSelected: function (theDate) {
+                            $this.text = theDate;
+                        }
+                    });
+                    $datepickerNew.datepicker('setDate', $today);
+
+                    $datepickerFrom.datepicker({
+                        onClose: function (selectedDate) {
+                            $datepickerTo.datepicker("option", "minDate", selectedDate);
+                        }
+                    });
+
+                    $datepickerTo.datepicker({
+                        onClose: function (selectedDate) {
+                            $datepickerFrom.datepicker("option", "maxDate", selectedDate);
+                        }
+                    });
+
+                });
+            }
+
+        })
+
+    </script>
+
+</body>
+</html>

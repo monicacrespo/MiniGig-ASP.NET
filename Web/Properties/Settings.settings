@@ -1,0 +1,27 @@
+﻿<?xml version='1.0' encoding='utf-8'?>
+<SettingsFile xmlns="http://schemas.microsoft.com/VisualStudio/2004/01/settings" CurrentProfile="(Default)" GeneratedClassNamespace="Web.Properties" GeneratedClassName="Settings">
+  <Profiles />
+  <Settings>
+    <Setting Name="MiniGig_defaultCount" Type="System.Int32" Scope="Application">
+      <Value Profile="(Default)">2</Value>
+    </Setting>
+    <Setting Name="MiniGig_applicationURL" Type="System.String" Scope="Application">
+      <Value Profile="(Default)">http://localhost:8081/MiniGig</Value>
+    </Setting>
+    <Setting Name="ObjectDS_Gigs_Service" Type="System.String" Scope="Application">
+      <Value Profile="(Default)">Model.GigFacade.GigService</Value>
+    </Setting>
+    <Setting Name="ObjectDS_Gigs_SelectMethod" Type="System.String" Scope="Application">
+      <Value Profile="(Default)">FindGigsByDate</Value>
+    </Setting>
+    <Setting Name="ObjectDS_Gigs_CountMethod" Type="System.String" Scope="Application">
+      <Value Profile="(Default)">GetNumberOfGigsByDate</Value>
+    </Setting>
+    <Setting Name="ObjectDS_Gigs_StartIndexParameter" Type="System.String" Scope="Application">
+      <Value Profile="(Default)">startIndex</Value>
+    </Setting>
+    <Setting Name="ObjectDS_Gigs_CountParameter" Type="System.String" Scope="Application">
+      <Value Profile="(Default)">count</Value>
+    </Setting>
+  </Settings>
+</SettingsFile>

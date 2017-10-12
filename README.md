@@ -42,11 +42,11 @@ Use Cases:
         3. Users.sql 
         4. UserNetworkService.sql
     2. Application deployment
-       1. Copy the following two files from the WixInstaller folder on specific server
+       1. Copy the following two files from the WixInstaller/MSIInstallationFile folder on specific server
             * WixInstaller.msi
             * DV.MiniGig.bat
        2. Please, review the values of the DV.MiniGig.bat file to make sure the values are correct, such as the value of sql server instance set up in the parameter V_MINIGIGDBSERVER
-       3. Make sure the start page is Pages/MainPage.aspx
+       3. Make sure the start page on the Web project is Pages/MainPage.aspx
 2.	Software dependencies    
     1. .Net Framework 4.0 or higher
     2.  MS SQL Server Express

@@ -36,7 +36,7 @@ Use Cases:
 
 # Getting Started
 1.	Installation process
-    1. Database deployment. Deploy the SQL Scripts (with run order) located on the Model\Sql folder
+    1. Database deployment. Deploy the SQL Scripts (with run order) located on the Model/Sql folder
         1. Database.sql 
         2. Tables.sql 
         3. Users.sql 

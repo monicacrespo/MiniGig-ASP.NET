@@ -45,7 +45,7 @@ Use Cases:
             * WixInstaller.msi (MSI deployment package)
        2. Copy the following file from the Installer folder on specific server
             * DV.EMiniGig.bat
-       3. Please, review the values of the DV.EMiniGig.bat file to make sure the values are correct, such as the value of sql server instance set up in the parameter V_MINIGIGDBSERVER
+       3. Please, make sure you copy both files to the same folder. And review the values of the DV.EMiniGig.bat file to make sure the values are correct, such as the value of sql server instance set up in the parameter V_MINIGIGDBSERVER
        4. Open command prompt as administrator (cmd). In the Command Prompt, navigate to the directory that the install file is located and run it (DV.EMiniGig.bat).
 2.	Software dependencies    
     1. .Net Framework 4.0 or higher

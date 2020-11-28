@@ -14,11 +14,11 @@ The solution contains six projects:
     * GigFacade
         * GigService
         * IGigService    
-*  Test (Microsoft Unit Testing)
+*  MSTest (Microsoft Unit Testing)
 *  NUnitTest
 *  Util
 *  Web
-*  Installer
+*  WixInstaller
 
 Use Cases:
 *   Set locale

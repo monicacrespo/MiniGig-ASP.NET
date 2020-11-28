@@ -1,5 +1,5 @@
 # Introduction
-MiniGig is a simple Model-View-Controller web based application in C# ASP.NET that I built few years ago (2013) and now I have extended it in Visual Studio 2015 Professional with NUnit and Microsoft unit testing. For application packaging and deployment I have used WiX (Windows Installer XML).
+MiniGig is a simple Model-View-Controller web based application in C# ASP.NET that I built few years ago (2013) and now I have extended it in Visual Studio 2015 Professional with NUnit test. For application packaging and deployment I have used WiX (Windows Installer XML).
 
 The motivation was to design and develop a web application that can be viewed in multiple languages (English and Spanish)
 with N-tier architecture using Design patterns such as MVC, Dependency Injection, Facade, DAO, Unit testing as well as the jQuery UI Datepicker widget for date fields in web forms.
